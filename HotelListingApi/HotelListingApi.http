@@ -73,3 +73,10 @@ Content-Type: application/json
 DELETE {{HotelListingApi_HostAddress}}/api/hotels/{{id}}
 
 ###
+
+POST {{HotelListingApi_HostAddress}}/api/auth/register
+Content-Type: application/json
+{
+  "email": "user@localhost.com",
+  "password": "Password@123"
+}
