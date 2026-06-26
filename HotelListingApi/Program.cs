@@ -21,6 +21,8 @@ builder.Services.AddControllers()
 
 builder.Services.AddScoped<ICountriesServices, CountriesServices>();
 builder.Services.AddScoped<IHotelsServices, HotelsServices>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<HotelMappingProfile>();
