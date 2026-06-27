@@ -1,7 +1,10 @@
+using HotelListingApi.Constants;
 using HotelListingApi.Contracts;
 using HotelListingApi.Data;
+using HotelListingApi.Handlers;
 using HotelListingApi.MappingProfiles;
 using HotelListingApi.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +15,11 @@ var connectionString = builder.Configuration.GetConnectionString("HotelListingDb
 builder.Services.AddDbContext<HotelListingDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<HotelListingDbContext>();
+builder.Services.AddAuthentication( options =>
+{
+    options.DefaultAuthenticateScheme = AuthenticationDefaults.BasicScheme;
+    options.DefaultChallengeScheme = AuthenticationDefaults.BasicScheme;
+}).AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(AuthenticationDefaults.BasicScheme, _ => { });
 builder.Services.AddAuthorization();
 builder.Services.AddControllers()
     .AddJsonOptions(opt =>
