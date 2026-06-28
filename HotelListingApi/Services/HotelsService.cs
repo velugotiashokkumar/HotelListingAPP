@@ -10,7 +10,7 @@ using HotelListingApi.Constants;
 
 namespace HotelListingApi.Services
 {
-    public class HotelsServices(HotelListingDbContext context, ICountriesServices countriesServices, IMapper mapper) : IHotelsServices
+    public class HotelsService(HotelListingDbContext context, ICountriesServices countriesServices, IMapper mapper) : IHotelsServices
     {
         public async Task<Result<IEnumerable<GetHotelDto>>> GetHotelsAsync()
         {

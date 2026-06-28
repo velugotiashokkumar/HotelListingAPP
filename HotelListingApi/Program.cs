@@ -17,9 +17,11 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<HotelListingDbContext>();
 builder.Services.AddAuthentication( options =>
 {
-    options.DefaultAuthenticateScheme = AuthenticationDefaults.BasicScheme;
-    options.DefaultChallengeScheme = AuthenticationDefaults.BasicScheme;
-}).AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(AuthenticationDefaults.BasicScheme, _ => { });
+    options.DefaultAuthenticateScheme = AuthenticationDefaults.ApiKeyScheme;
+    options.DefaultChallengeScheme = AuthenticationDefaults.ApiKeyScheme;
+}).AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(AuthenticationDefaults.BasicScheme, _ => { })
+  .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(AuthenticationDefaults.ApiKeyScheme, _ => { });
+
 builder.Services.AddAuthorization();
 builder.Services.AddControllers()
     .AddJsonOptions(opt =>
@@ -28,8 +30,9 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddScoped<ICountriesServices, CountriesServices>();
-builder.Services.AddScoped<IHotelsServices, HotelsServices>();
+builder.Services.AddScoped<IHotelsServices, HotelsService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IApiKeyValidatorService, ApiKeyValidatorService>();
 
 builder.Services.AddAutoMapper(cfg =>
 {
@@ -41,7 +44,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-app.MapGroup("api/auth").MapIdentityApi<ApplicationUser>();
+app.MapGroup("api/defaultauth").MapIdentityApi<ApplicationUser>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

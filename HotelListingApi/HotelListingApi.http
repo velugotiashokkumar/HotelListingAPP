@@ -1,5 +1,5 @@
 @HotelListingApi_HostAddress = https://localhost:7274
-
+@apiKey=dXNlcjRAbG9jYWxob3N0LmNvbTpQYXNzd29yZEAxMjM=
 POST {{HotelListingApi_HostAddress}}/api/countries
 Content-Type: application/json
 
@@ -11,6 +11,8 @@ Content-Type: application/json
 ###
 
 GET {{HotelListingApi_HostAddress}}/api/countries
+X-Api-Key: {{apiKey}}
+#Authorization: Basic dXNlcjRAbG9jYWxob3N0LmNvbTpQYXNzd29yZEAxMjM=
 
 ###
 
@@ -80,10 +82,20 @@ POST {{HotelListingApi_HostAddress}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "user2@localhost.com",
+  "email": "user4@localhost.com",
   "password": "Password@123",
   "firstName": "First",
   "LastName": "Last"
+}
+
+###
+
+POST {{HotelListingApi_HostAddress}}/api/auth/Login
+Content-Type: application/json
+
+{
+  "email": "user4@localhost.com",
+  "password": "Password@123"
 }
 
 ###
