@@ -1,8 +1,11 @@
 @HotelListingApi_HostAddress = https://localhost:7274
 @apiKey=dXNlcjRAbG9jYWxob3N0LmNvbTpQYXNzd29yZEAxMjM=
+@jwt=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhODI5ZTdmNi05ODM3LTRjMjktOTI5Ny0zYTZiZDFlNDM0NDMiLCJlbWFpbCI6ImFkbWluQGxvY2FsaG9zdC5jb20iLCJqdGkiOiJmY2FhZjk5MS1iYTM0LTQyODQtYjgwNC02NTJiZTkwMWY2MzEiLCJuYW1lIjoiTGFzdCwgRmlyc3QiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbmlzdHJhdG9yIiwiZXhwIjoxNzgyNjI2NTc4LCJpc3MiOiJIb3RlbExpc3RpbmdBcGkiLCJhdWQiOiJIb3RlbExpc3RpbmdBUElDbGllbnQifQ.7nEy7V0NH_ilzhwHG9ObGyL09k3fiDcqU7qlGd9i-FQ
+
+
 POST {{HotelListingApi_HostAddress}}/api/countries
 Content-Type: application/json
-
+Authorization: {{jwt}}
 {
   "name": "Testcountry8",
   "shortName": "TC8"
@@ -13,27 +16,32 @@ Content-Type: application/json
 GET {{HotelListingApi_HostAddress}}/api/countries
 #X-Api-Key: {{apiKey}}
 #Authorization: Basic dXNlcjRAbG9jYWxob3N0LmNvbTpQYXNzd29yZEAxMjM=
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Yzg2Zjk1MC1lODAxLTQzODUtYjlmNC1mODJhYjQwOWZmYWEiLCJlbWFpbCI6InVzZXI0QGxvY2FsaG9zdC5jb20iLCJqdGkiOiIxNGI5ZTZkZi1hNjZiLTQ1NGMtYWEwZi1jZjhjN2Q3NzFhNTUiLCJuYW1lIjoiTGFzdCwgRmlyc3QiLCJleHAiOjE3ODI2MTc5NDMsImlzcyI6IkhvdGVsTGlzdGluZ0FwaSIsImF1ZCI6IkhvdGVsTGlzdGluZ0FQSUNsaWVudCJ9.YtZRDhjTbNHkJ43bSKeeIrEuKCKELDhfj5hRJLLYGgk
+Authorization: {{jwt}}
+
 
 ###
 
-@id=6
+@id=1003
 GET {{HotelListingApi_HostAddress}}/api/countries/{{id}}
+Authorization: {{jwt}}
 
 ###
 
 PUT {{HotelListingApi_HostAddress}}/api/countries/{{id}}
 Content-Type: application/json
+Authorization: {{jwt}}
+
 
 {
-  "id": 3,
-  "name": "India",
-  "shortName": "IND"
+  "id": 1003,
+  "name": "Test1",
+  "shortName": "TS"
 }
 
 ###
 
 DELETE {{HotelListingApi_HostAddress}}/api/countries/{{id}}
+Authorization: {{jwt}}
 
 ###
 
@@ -83,10 +91,11 @@ POST {{HotelListingApi_HostAddress}}/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "user4@localhost.com",
+  "email": "admin@localhost.com",
   "password": "Password@123",
   "firstName": "First",
-  "LastName": "Last"
+  "LastName": "Last",
+  "Role": "Administrator"
 }
 
 ###
@@ -95,8 +104,18 @@ POST {{HotelListingApi_HostAddress}}/api/auth/Login
 Content-Type: application/json
 
 {
-  "email": "user4@localhost.com",
+  "email": "admin@localhost.com",
   "password": "Password@123"
 }
+
+###
+
+GET {{HotelListingApi_HostAddress}}/api/apikey
+X-Api-Key:  {{apiKey}}
+
+###
+
+GET {{HotelListingApi_HostAddress}}/api/basicauth
+Authorization: Basic {{apiKey}}
 
 ###

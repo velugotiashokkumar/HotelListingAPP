@@ -4,6 +4,7 @@ using HotelListingApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelListingApi.Migrations
 {
     [DbContext(typeof(HotelListingDbContext))]
-    partial class HotelListingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260628050913_AddedDefaultRoles")]
+    partial class AddedDefaultRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,15 +55,6 @@ namespace HotelListingApi.Migrations
                         .IsUnique();
 
                     b.ToTable("ApiKeys");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AppName = "app",
-                            CreatedAtUtc = new DateTimeOffset(new DateTime(2026, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 5, 30, 0, 0)),
-                            Key = "dXNlcjRAbG9jYWxob3N0LmNvbTpQYXNzd29yZEAxMjM="
-                        });
                 });
 
             modelBuilder.Entity("HotelListingApi.Data.ApplicationUser", b =>

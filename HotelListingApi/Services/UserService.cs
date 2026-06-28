@@ -31,12 +31,15 @@ namespace HotelListingApi.Services
                 return Result<RegisterdUserDto>.BadRequest(errors);
             }
 
+            await userManager.AddToRoleAsync(user, registerUserDto.Role);
+
             var registeredUser = new RegisterdUserDto
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Id = user.Id
+                Id = user.Id,
+                Role = registerUserDto.Role
             };
             return Result<RegisterdUserDto>.Success(registeredUser);
         }
