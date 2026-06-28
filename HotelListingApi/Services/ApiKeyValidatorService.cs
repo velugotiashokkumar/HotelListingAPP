@@ -1,6 +1,9 @@
 ﻿using HotelListingApi.Contracts;
 using HotelListingApi.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 namespace HotelListingApi.Services
 {
     public class ApiKeyValidatorService(HotelListingDbContext db) : IApiKeyValidatorService

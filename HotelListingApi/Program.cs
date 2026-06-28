@@ -5,8 +5,11 @@ using HotelListingApi.Handlers;
 using HotelListingApi.MappingProfiles;
 using HotelListingApi.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +17,29 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("HotelListingDbConnectionString");
 builder.Services.AddDbContext<HotelListingDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<HotelListingDbContext>();
+
 builder.Services.AddAuthentication( options =>
 {
-    options.DefaultAuthenticateScheme = AuthenticationDefaults.ApiKeyScheme;
-    options.DefaultChallengeScheme = AuthenticationDefaults.ApiKeyScheme;
-}).AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(AuthenticationDefaults.BasicScheme, _ => { })
-  .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(AuthenticationDefaults.ApiKeyScheme, _ => { });
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"])),
+            ClockSkew = TimeSpan.Zero // Default is 5 minutes
+        };
+    })
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(AuthenticationDefaults.BasicScheme, _ => { })
+    .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(AuthenticationDefaults.ApiKeyScheme, _ => { });
 
 builder.Services.AddAuthorization();
 builder.Services.AddControllers()

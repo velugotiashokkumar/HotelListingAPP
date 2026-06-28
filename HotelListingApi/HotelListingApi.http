@@ -11,8 +11,9 @@ Content-Type: application/json
 ###
 
 GET {{HotelListingApi_HostAddress}}/api/countries
-X-Api-Key: {{apiKey}}
+#X-Api-Key: {{apiKey}}
 #Authorization: Basic dXNlcjRAbG9jYWxob3N0LmNvbTpQYXNzd29yZEAxMjM=
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0Yzg2Zjk1MC1lODAxLTQzODUtYjlmNC1mODJhYjQwOWZmYWEiLCJlbWFpbCI6InVzZXI0QGxvY2FsaG9zdC5jb20iLCJqdGkiOiIxNGI5ZTZkZi1hNjZiLTQ1NGMtYWEwZi1jZjhjN2Q3NzFhNTUiLCJuYW1lIjoiTGFzdCwgRmlyc3QiLCJleHAiOjE3ODI2MTc5NDMsImlzcyI6IkhvdGVsTGlzdGluZ0FwaSIsImF1ZCI6IkhvdGVsTGlzdGluZ0FQSUNsaWVudCJ9.YtZRDhjTbNHkJ43bSKeeIrEuKCKELDhfj5hRJLLYGgk
 
 ###
 
